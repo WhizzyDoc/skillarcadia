@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+  h1{
+    font-weight: 300;
+    font-family: sans-serif
+  }
+  .back{
+    font-weight: 600;
+    background: black;
+    color: white ;
+    
+  }
+    a{
+      display: inline-block;
+      xmargin-bottom: 12px;
+      color: purple;
+      outline: 1px solid blue;
+      margin-bottom: 5px ;
+      border-radius: 60px;
+      padding: 6px;
+    }
+  </style>
+ 
+  <script src="xjsx.0.1.1.js"></script>
+  
+  <!-- Modules -->
+  <script src="fetch.js"></script>
+  <script src="include.js"></script>
+  <script src="print.js"></script>
+  <script src="print-html.js"></script>
+  <script src="if.js"></script>
+  <script src="data.js"></script>
+  <script src="on.js"></script>
+  <script src="eval.js"></script>
+  <script src="console-log.js"></script>
+  <script src="animate.js"></script>
+  <script src="for-each.js"></script>
+  <script src="parse-json.js"></script>
+  <script src="use-template.js"></script>
+  <script src=" html-element.js"></script>
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  
+</head>
+
+<body>
+  
+<?html-element: "h1"?>
+List of all keys at window 
+<?end?>
+
+
+<?on: "xload"; event?>
+  <?eval: var _dt=event.detail, _pt=_dt.path, _pk=_dt.parentKey, _pv=_dt.parentVal, _val=event.detail.val, _key=event.detail.key?>
+  <?if: _pk?>
+    <?html-element:"a", {onclick:back, class: "back"}; node?>
+      <?eval: node.key=_pk, node.val=_pv, node.path=_pt?>
+      <?print: _pk?> (go back)
+    <?end?>
+     <br>
+  <?end?>
+  <?if: "object"=== typeof _val && _val?>
+    <?for-each: _val, 10; val, key?>
+       <?html-element:"a", {onclick:foo}; node?>
+         <?eval: node.key=key, node.val=val,node.path=_pt, node.parentKey=_key, node.parentVal=_val?>
+         <?print: key?>
+       <?end?>
+       <br>
+    <?end?>
+  <?else?> 
+    <mark><?print: _val?></mark>
+  <?end?>
+<?end?>
+
+<script>
+function parse(e){
+  e=e
+  .trim()
+  . replace (/(\/)/g,".");
+  
+  return e
+}
+
+function prt(e){
+  e=e.trim()
+  .split("/");
+  e.pop();
+  e=e.join("/")
+  return e
+}
+
+function back(){
+  var pt=this.path
+  pt=pt[pt.length-2]||[]
+  this.path.pop()
+  XJSX.event.emit("xload", {path:this.path, val: this.val, key: this.key, parentVal: pt[0], parentKey: pt[1]}) 
+  }
+  
+  function foo(){
+   XJSX.event.emit("xload", {
+     val: this.val,
+     key:this.key,
+     path:this.path?this.path.push([this.parentVal,this.parentKey])&&this.path:[[this.parentVal,this.parentKey]], 
+     parentKey: this.parentKey,
+     parentVal: this.parentVal
+     }) 
+  }
+  
+  XJSX.event.emit("xload",{val: window, key:"window", path:[]})
+</script>
+</body>
+
+</html>

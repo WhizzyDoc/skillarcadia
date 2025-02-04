@@ -1,0 +1,140 @@
+
+
+/*same styling*/
+/*
+#editing, #highlighting {
+  margin: 10px;
+  padding: 10px;
+  border: none;
+  width: calc(100% - 32px);
+  height: 150px;
+}
+#editing, #highlighting, #highlighting *{
+  font-size: 15pt;
+  font-family: monospace;
+  line-height: 20pt;
+  tab-size: 2;
+}*/
+
+/*same position
+#editing, #highlighting {
+  position: absolute;
+  top: 0;
+  left: 0;
+}*/
+
+/*textarea in front of the result
+#editing {z-index: 1}
+#highlighting {z-index: 0}*/
+
+/*make textarea completely transparent
+#editing {
+  color: transparent;
+  background: transparent;
+  caret-color: white;
+  outline: none;
+}*/
+
+/*can be scrolled
+#editing, #highlighting {
+  overflow: auto;
+  white-space: nowrap; allow horizontal scrolling
+}*/
+
+/*no resize on textarea
+#editing {resize: none} */
+
+/*paragraphs; first image
+* {
+  font-family: "Fira Code", monospace;
+}*/
+p code {
+  border-radius: 2px;
+  background-color: #eee;
+  color: #111;
+}
+
+/*Syntax highlighting begins below*/
+code[class*="language-"], pre[class*="language-"] {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 12px;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/*code blocks*/
+pre[class*="language-"] {
+  padding: 5px;
+  padding-top: 0;
+  margin: 0;
+  margin-bottom: .5em;
+  overflow: auto;
+  background: black;
+}
+code[class*="language-"] {
+  background: black;
+  color: white;
+  box-shadow: -.3em 0 0 .3em black, .3em 0 0 .3em black;
+}
+
+/*Inline code*/
+:not(pre)>code[class*="language-"] {
+  padding: 5px;
+  border-radius: .3em;
+  box-shadow: none;
+  white-space: normal;
+}
+.token.comment, .token.prolog, .token.doctype, .token.cdata {
+  color: #aaa;
+}
+.token.punctuation {
+  opacity: 1;
+}
+.token.property, .token.tag, .toke.boolean, .token.number, .token.constant, .token.symbol {
+  color: #0cf;
+}
+.token.selector, .token.attr-name, .token.string, .token.char, .token.builtin {
+  color: yellow;
+}
+.token.operator, .token.entity, .token.url, .language-css .token.string, .token.variable, .token.inserted {
+  color: yellowgreen;
+}
+.token.atrule, .token.attr-value, .token.keyword {
+  color: deeppink;
+}
+.token.regex, .token.important {
+  color: orange;
+}
+.token.important, .token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+.token.entity {
+  cursor: help;
+}
+.token.deleted {
+  color: red;
+}
+
+/*Plugin styles: Diff highlight*/
+pre.diff-highlight.diff-highlight > code .token.deleted:not(.prefix), pre > code.diff-highlight.diff-highlight .token.deleted:not(.prefix) {
+  background-color: rgba(255, 0, 0, .3);
+  display: inline;
+}
+pre.diff-highlight.diff-highlight > code .token.inserted:not(.prefix), pre > code.diff-highlight.diff-highlight .token.inserted:not(.prefix) {
+  background-color: rgba(0, 255, 128, .3);
+  display: inline;
+}

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- template -->
+  
+  <!-- navigation bar -->
+  <template id="sidenav">
+    <div class="preloader">
+      <div class="cube">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <p>Please wait...</p>
+    </div>
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+      <div class="dash-act"><a href="#"><i class="fa fa-laptop"></i><br>My Courses</a></div>
+      <div class="group-act"><a href="#projects"><i class="fa fa-bar-chart"></i><br>Projects</a></div>
+      <div class="profile-act"><a href="#profile"><i class="fa fa-smile-o"></i><br>Profile</a></div>
+      
+  </div>
+
+    <script src="./static/js/login.js"></script>
+    <script>
+      
+      $('.logout-btn').click(function(e) {
+        e.preventDefault();
+        logout();
+      })
+    </script>
+  </template>
+
+  <!-- header -->
+  <template id="header">
+    <header class="">
+      <a href="#profile" class="user_profile">
+        <img src="./static/image/avatar.png" class="user_img" alt="" />
+        <div>
+          <div class="user_name"></div>
+          <div class="user_id"></div>
+        </div>
+      </a>
+      <a href="#" class="note-bell text-color fa fa-bell-o"></a>
+    </header>
+    
+  </template>
+  <!-- setting header -->
+  <template id="set_header">
+    <header class="">
+      <a href="#profile" class="user_profile">
+        <img src="" class="user_img" alt="" />
+        <div>
+          <div class="user_name"></div>
+          <div class="user_id"></div>
+        </div>
+      </a>
+      <a href="#settings" class="note-bell text-color fa fa-gear"></a>
+    </header>
+    
+  </template>
+
+    <!-- for dashboard -->
+    <template id="dashboard">
+    
+      <?use-template: "sidenav"?>
+      <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+      <main class="">
+        
+        <?use-template: "header"?>
+
+      <!-- savings -->
+      <section id="course-list">
+        <div class="w-padding w-flex w-flex-between w-align-center">
+          <div class="h5 w-bold-x text-color">My Courses</div>
+        </div>
+        
+        <div class="course-list-con w-padding">
+          <div class="saving-item w-margin-bottom">
+            <img src="./static/image/target.webp" alt="">
+            <div>
+              <div class="h4 w-bold-x">Target Savings</div>
+              <p class="w-text-gray">
+                Target Savings is designed to help you set asides funds for an important event.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      </main>
+
+      <div class="modules_con side-con">
+        <div class="mb-2">
+          <div class="w-flex w-flex-start w-align-center" style="gap:20px;padding:10px 20px;">
+            <button class="add_emp_btn c_back_btn"><i class="fa fa-chevron-left"></i></button>
+            <div class="h5 w-padding-top w-text-white course-title"></div>
+          </div>
+          <div class="module-banner">
+            
+          </div>
+          <div class="w-flex w-flex-between w-align-center w-padding">
+            <div class="h5 w-text-white">Completed <i class="fa fa-check w-text-green"></i></div>
+            <div class="h5 w-text-white">Undone <i class="fa fa-clock-o w-text-orange"></i></div>
+          </div>
+          <div class="modules-con" id="accordion"></div>
+        </div>
+      </div>
+
+      <script src="./static/js/dashboard.js"></script>
+      <script>
+        $('.dash-act').addClass('active')
+        $('.c_back_btn').click(function() {
+          $(this).parent('div').parent('div').parent('.side-con').removeClass('active')
+        });
+  
+      </script>
+    </template>
+
+    <!-- for transaction history -->
+<template id="projects">
+  <?use-template: "sidenav"?>
+  <main class="trans-main">
+  <div class="trans-header w-card">
+    <h4 class="w-bold-x w-center text-color">My Projects</h4>
+    <div class="w-flex w-flex-around w-align-center">
+      <div class="fa fa-filter h4 w-text-white"> Filter</div>
+      <select class="form-control course-filter w-margin-right" style="width:78%;border:none;">
+      </select>
+    </div>
+  </div>
+  <div class="w-flex w-flex-between w-align-center w-padding">
+    <div class="h5 w-text-white">Submitted <i class="fa fa-check w-text-green"></i></div>
+    <div class="h5 w-text-white">Unsubmitted <i class="fa fa-times w-text-orange"></i></div>
+  </div>
+  <div class="projects-con w-padding" id="accordion"></div>
+  </main>
+
+  <!-- Transaction details -->
+  <div class="trans_det_con side-con">
+        <div class="mb-2">
+          <div class="w-flex w-flex-start w-align-center" style="gap:20px;padding:10px 20px;">
+            <button class="add_emp_btn c_back_btn"><i class="fa fa-chevron-left"></i></button>
+            <div class="h5 w-text-white">Transaction Detail</div>
+          </div>
+          <div class="trans-detail-con"></div>
+          <a class="download-trans-btn bg-gradient"><i class="fa fa-download"></i> Download Receipt</a>
+        </div>
+      </div>
+
+      <script src="./static/js/project.js"></script>
+  <script>
+    $('.group-act').addClass('active');
+    $('.c_back_btn').click(function() {
+          $(this).parent('div').parent('div').parent('.side-con').removeClass('active')
+        });
+    $('.course-filter').on('change', function() {
+      getUserProjects();
+    })
+  </script>
+</template>
+
+<template id="profile">
+  <?use-template: "sidenav"?>
+
+  
+      <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+      <main class="w-padding-top profile-main">
+        <h3 class="w-bold-x w-center text-color">My Profile</h3>
+        <div class="user-detail-con">
+          <div class="profile-section" style="background: transparent !important;">
+            <img src="./static/image/avatar.png" class="user_img" alt="" />
+          </div>
+          <div class="profile-section">
+            <div class="profile-item w-margin-bottom">
+              <h3 class="w-bold-x text-title">Personal Information</h3>
+            </div>
+            <div class="profile-item">
+              <div class="w-bold-x"><i class="fa fa-user"></i> Full Name</div>
+              <div id="profile_name"></div>
+            </div>
+            <div class="profile-item">
+              <div class="w-bold-x"><i class="fa fa-paperclip"></i> Profile ID</div>
+              <div id="profile_id"></div>
+            </div>
+            <div class="profile-item">
+              <div class="w-bold-x"><i class="fa fa-phone"></i> Mobile</div>
+              <div id="profile_phone"></div>
+            </div>
+            <div class="profile-item">
+              <div class="w-bold-x"><i class="fa fa-envelope"></i> Email</div>
+              <div id="profile_email"></div>
+            </div>
+          </div>
+
+          <div class="profile-section">
+            <div class="profile-item w-margin-bottom">
+              <h3 class="w-bold-x text-title">Track Information</h3>
+            </div>
+            <div class="profile-item">
+              <div class="w-bold-x"><i class="fa fa-reorder"></i> Cohort</div>
+              <div id="tier"></div>
+            </div>
+            <div class="profile-item">
+              <div class="w-bold-x"><i class="fa fa-desktop"></i> Program</div>
+              <div id="credit_score"></div>
+            </div>
+          </div>
+
+          <div class="profile-section">
+            <div class="profile-item w-margin-bottom">
+              <h3 class="w-bold-x text-title">Settings</h3>
+            </div>
+            <div class="profile-item change-pass-btn">
+              <div class="w-bold-x"><i class="fa fa-key"></i> Change Password</div>
+              <div id=""><i class="fa fa-chevron-right"></i></div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <div class="change_pass_con side-con">
+        <div class="mb-2">
+          <div class="w-flex w-flex-start w-align-center" style="gap:20px;padding:20px 20px 0px 20px;">
+            <button class="add_emp_btn c_back_btn"><i class="fa fa-chevron-left"></i></button>
+            <div class="h5 w-text-white">Change Password</div>
+          </div>
+          <form id="change-pass-form" class="w-padding">
+            <div class="form-group">
+              <label for="">Old Password</label>
+              <input type="password" class="form-control" id="old-pass" />
+            </div>
+            <div class="form-group">
+              <label for="">New Password</label>
+              <input type="password" class="form-control" id="new-pass" />
+            </div>
+            <div class="form-group">
+              <label for="">Confirm New Password</label>
+              <input type="password" class="form-control" id="cnew-pass" />
+            </div>
+            <button class="btn bg-gradient subm-btn" id="change_pass_btn" type="submit">Change Password</button>
+          </form>
+        </div>
+      </div>
+
+      <script src="./static/js/profile.js"></script>
+      <script>
+        $('.profile-act').addClass('active')
+        $('.change-pass-btn').click(function() {
+          $(".change_pass_con").addClass('active')
+        })
+        $('.c_back_btn').click(function() {
+          $(this).parent('div').parent('div').parent('.side-con').removeClass('active')
+        });
+        $("#change-pass-form").submit(function(e) {
+          e.preventDefault();
+          changePassword()
+        })
+      </script>
+</template>
+
+
+
+  <!-- error 404 page -->
+  <template id="404">
+    <?use-template: "sidenav"?>
+    <main class="w-flex w-flex-center w-align-center" style="flex-direction: column;text-align:center;height:80vh;">
+      <h1 class="w-padding-left w-padding-right text-title">Rome was not built in a Day</h1>
+      <h3 class="w-text-white">Great things take time to develop</h3>
+      <a href="#" class="action-btn user_level_2">This page is under development</a>
+      <h4 class="header"><?print: hash?></h4>
+  </main>
+    <script>
+      $('.preloader').addClass('keep')
+    </script>
+</template>
+
+<!-- Routes -->
+<!-- homepage -->
+<template route="/">
+  <?use-template: "dashboard"?>
+</template>
+<template route="/projects">
+  <?use-template: "projects"?>
+</template>
+<template route="/transfer">
+  <?use-template: "transfer"?>
+</template>
+<template route="/me">
+  <?use-template: "me"?>
+</template>
+<template route="/profile">
+  <?use-template: "profile"?>
+</template>
+<template route="/accounts">
+  <?use-template: "accounts"?>
+</template>
+<template route="/settings">
+  <?use-template: "settings"?>
+</template>
+<template route="/savings">
+  <?use-template: "savings"?>
+</template>
+<template route="/groups">
+  <?use-template: "groups"?>
+</template>
+
+<!-- Standard Meta -->
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<!-- Site Properties -->
+<title></title>
+<link rel="stylesheet" type="text/css" href="./static/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="./static/css/fontawesome.css">
+<link rel="stylesheet" type="text/css" href="./static/css/rigan.css">
+<link rel="stylesheet" type="text/css" href="./static/themes/w-theme-blue.css">
+<link rel="stylesheet" type="text/css" href="./dist/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="./static/css/sweetalert.min.css">
+<link rel="stylesheet" href="./static/css/owl.carousel.min.css">
+<link rel="stylesheet" type="text/css" href="./static/css/nav.css">
+<link rel="stylesheet" type="text/css" href="./static/css/toastify.min.css">
+<script src="./static/module/swif.js"></script>
+<script src="./static/js/jquery.min.js"></script>
+<script src="./static/js/popper.min.js"></script>
+<script src="./static/js/bootstrap.min.js"></script>
+<script src="./static/js/sweetalert.min.js"></script>
+<script src="./dist/semantic.min.js"></script>
+<script src="./static/js/owl.carousel.min.js"></script>                                               
+
+<script>
+var on = XJSX.event.on,
+emit = XJSX.event.emit;
+emit("hashchange");
+</script>
+
+<style type="text/css">
+
+</style>
+</head>
+<body>
+  <script>
+
+    if(!localStorage.skill_auth_token) {
+      location.href = './signup.html';
+    }
+
+</script>
+
+  
+<?on: "hashchange"?>
+
+<?eval:
+"var hash=location.hash
+hash=hash.replace(/^\/?#\/?|^/img,'/')
+var page=document.querySelector(`template[route='${hash}']`)||'404';"?>
+
+
+<?use-template: page?>
+<?end?>
+<script src="./static/js/toastify.min.js"></script>
+<script src="./static/js/functions.js"></script>
+</body>
+</html>                                                                                                                                               

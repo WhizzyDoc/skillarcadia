@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./static/css/fontawesome.css">
+    <link rel="stylesheet" type="text/css" href="./static/css/rigan.css">
+    <link rel="stylesheet" type="text/css" href="./static/themes/w-theme-blue.css">
+    <link rel="stylesheet" type="text/css" href="./dist/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="./static/css/sweetalert.min.css">
+    <link rel="stylesheet" type="text/css" href="./static/css/login.css">
+    <script src="./static/module/swif.js"></script>
+    <script src="./static/js/jquery.min.js"></script>
+    <script src="./static/js/bootstrap.min.js"></script>
+    <script src="./static/js/sweetalert.min.js"></script>
+    <script src="./dist/semantic.min.js"></script> 
+    <title>SkillArcadia - Login</title>
+    <!-- Templates -->
+    <template id="404">
+        <?include: "templates/_parts/404.html"?><?end?>
+    </template>
+
+    <!-- login -->
+    <template id="login">
+      <div class="row">
+          <div class="login-form col-12 col-sm-12 col-md-6 col-lg-5 col-xl-5">   
+            <div class="wrapper">
+              <div class="anony">
+                <img src="./static/image/avatar.png" alt="" />
+              </div>
+                        <form class="admin-login-form" action="#">
+                          <h2 class="text-title">Student Login</h2>
+                          <div class="form-group">
+                            <label>Enter Your Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                          </div>
+                          <div class="form-group">
+                            <label>Enter your password</label>
+                            <input type="password" class="form-control" id="password" required>
+                          </div>
+                          <p class="mt-2 w-text-error" id="admin_err"></p>
+                          <div class="forget">
+                            <label for="remember">
+                              <input type="checkbox" id="remember">
+                              <p>Remember me</p>
+                            </label>
+                            <a href="#forgot_password" class="text-color">Forgot password?</a>
+                          </div>
+                          <button type="submit" class="login-btn bg-button">Log In</button>
+                          
+                        </form>
+            </div>
+              
+          </div>
+      </div>
+      <script>
+          $('.view-pass').click(function() {
+              var input = $(this).siblings('input');
+              if(input.attr('type') == 'password') {
+                  input.attr('type', 'text');
+                  $(this).children('span').html(`<i class="fa fa-eye-slash"></i>`)
+              }
+              else {
+                  input.attr('type', 'password')
+                  $(this).children('span').html(`<i class="fa fa-eye"></i>`)
+              }
+          })
+          
+          $('.admin-login-form').submit(function(e) {
+              e.preventDefault();
+              authenticate();
+          })
+    
+      </script>
+    </template>
+
+  <!-- forgot password -->
+  <template id="forgot_password">
+    <div class="row">
+        <div class="login-form col-12 col-sm-12 col-md-6 col-lg-5 col-xl-5">   
+          <div class="wrapper">
+                      <form class="forgot-password-form" action="#">
+                        <h2 class="text-title">Forgot Password</h2>
+                          <div class="form-group">
+                            <label>Enter Your Registered Email</label>
+                            <input type="text" id="forg-email" class="form-control" required>
+                          
+                        </div>
+                        <button type="submit" class="forgot-btn bg-button">Reset Password</button>
+                        <div class="register">
+                            <p>Remembered your password? <a href="#" class="text-color">Log In</a></p>
+                          </div>
+                      </form>
+          </div>
+            
+        </div>
+    </div>
+    <script>
+        
+        $('.forgot-password-form').submit(function(e) {
+            e.preventDefault();
+            forgotPassword();
+        })
+  
+    </script>
+  </template>
+
+
+
+
+    <!-- Routes -->
+<!-- homepage -->
+<template route="/">
+    <?use-template: "login"?>
+  </template>
+  <template route="/forgot_password">
+    <?use-template: "forgot_password"?>
+  </template>
+    <script>
+        var on = XJSX.event.on,
+        emit = XJSX.event.emit;
+        emit("hashchange");
+    </script>
+</head>
+<body>
+    <script>
+        if(localStorage.skill_auth_token) {
+            location.href = './home.html';
+        }
+    </script>
+    <?on: "hashchange"?>
+
+<?eval:
+"var hash=location.hash
+hash=hash.replace(/^\/?#\/?|^/img,'/')
+var page=document.querySelector(`template[route='${hash}']`)||'404';"?>
+
+<?use-template: page?>
+<?end?>
+
+    <script src="./static/js/functions.js"></script>
+    <script src="./static/js/login.js"></script>
+    
+</body>
+</html>

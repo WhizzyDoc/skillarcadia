@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./static/css/fontawesome.css">
+    <link rel="stylesheet" type="text/css" href="./static/css/rigan.css">
+    <link rel="stylesheet" type="text/css" href="./static/themes/w-theme-blue.css">
+    <link rel="stylesheet" type="text/css" href="./dist/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="./static/css/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="./static/css/sweetalert.min.css">
+    <link rel="stylesheet" type="text/css" href="./static/css/login.css">
+    <script src="./static/module/swif.js"></script>
+    <script src="./dist/jquery.min.js"></script>
+    <script src="./static/js/bootstrap.min.js"></script>
+    <script src="./static/js/owl.carousel.min.js"></script>
+    <script src="./static/js/sweetalert.min.js"></script>
+    <script src="./dist/semantic.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <title>SkillArcadia</title>
+    <!-- Templates -->
+    <template id="404">
+        <?include: "templates/_parts/404.html"?><?end?>
+    </template>
+
+    <!-- Home -->
+    <template id="home">
+      <div class="owl-carousel dash">
+        <div class="slider-con">
+          <h2 class="w-text-white w-bold-xx w-center w-margin-bottom">SKILLARCADIA</h2>
+          <img src="./static/image/image copy 4.png" alt="">
+          <div class="slider-text w-text-white">
+            
+            <h3 class="w-bold-xx text-title">Welcome to SkillArcadia</h3>
+            <p>
+              Welcome to ÀJỌ, the app that helps you save money with others, manage your contributions, and receive payouts securely and timely.
+            </p>
+          </div>
+        </div>
+        <div class="slider-con">
+          <h2 class="w-text-white w-bold-xx w-center w-margin-bottom">Why SkillArcadia?</h2>
+          <img src="./static/image/image copy 14.png" alt="">
+          <div class="slider-text w-text-white">
+            <h3 class="w-bold-xx text-title">Contribute, Track and Receive</h3>
+            <ul>
+              <li>Join or create a group to make regular contributions.</li>
+              <li>Easily track groupmpayments and see who has paid.</li>
+              <li>Get your payout when it's your turn, with instant notifications.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="slider-con">
+          <img src="./static/image/image copy 8.png" alt="">
+          <div class="slider-text w-text-white">
+            <h2 class="w-bold-xx text-title">Automated Payments</h2>
+            <p>
+              Set up automatic contributions to never miss a payment. Receive alerts for upcoming contributions and payouts.
+            </p>
+
+            <div class="action-btns">
+              <a href="./signup.html" class="action-btn">Get Started</a>
+            </div>
+            
+          </div>
+        </div>
+    </div>
+    <script>
+      $(".dash").owlCarousel({
+        margin: 20,
+        loop: false,
+        autoplay: false,
+        autoplayTimeout: 5000,
+        autoplayHoverPause: true,
+        responsive: {
+          0:{
+          items:1,
+          nav: false
+          },
+          600:{
+          items:1,
+          nav: false
+          },
+          1300:{
+          items:2,
+          nav: false
+          }
+        }
+      });
+    </script>
+    </template>
+    <!-- login -->
+  
+
+
+    <!-- Routes -->
+<!-- homepage -->
+<template route="/">
+    <?use-template: "home"?>
+  </template>
+    <script>
+        var on = XJSX.event.on,
+        emit = XJSX.event.emit;
+        emit("hashchange");
+    </script>
+</head>
+<body>
+    <script>
+        if(localStorage.skill_auth_token) {
+            location.href = './home.html';
+        }
+    </script>
+    
+    
+    <?on: "hashchange"?>
+
+<?eval:
+"var hash=location.hash
+hash=hash.replace(/^\/?#\/?|^/img,'/')
+var page=document.querySelector(`template[route='${hash}']`)||'404';"?>
+
+<?use-template: page?>
+<?end?>
+
+</body>
+</html>
