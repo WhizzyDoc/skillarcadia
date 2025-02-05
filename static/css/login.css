@@ -270,7 +270,7 @@ form button {
     width: calc(100% - 40px) !important;
     height: auto;
     position: absolute;
-    bottom: 55vh;
+    bottom: 45vh;
   }
 
   .slider-text {
@@ -294,7 +294,7 @@ form button {
   }
   .action-btns {
     width: 100%;
-    padding: 20px 0;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -50,7 +50,7 @@ var auth_token = localStorage.skill_auth_token
           <div class="saving-item w-margin-bottom" data-id="${d[i].id}">
             <img src="${base_image_url}${d[i].image}" alt="">
             <div>
-              <div class="h4 w-bold-x">${d[i].title}</div>
+              <div class="h5 w-bold-x">${d[i].title}</div>
               <p class="w-text-gray">
                 ${truncateWord(d[i].description, 50)}
               </p>
@@ -104,7 +104,7 @@ var auth_token = localStorage.skill_auth_token
         let temp2  = `
         <img src="${base_image_url}${c.image}" alt="" />
         <div>
-          <p class="w-text-gray">${c.description}</p>
+          <p class="w-text-gray" style="font-size:12px;">${c.description}</p>
           <div class="h5 w-text-white"><b>By: </b>${c.tutor.name}</div>
         </div>`;
         $(".module-banner").html(temp2);

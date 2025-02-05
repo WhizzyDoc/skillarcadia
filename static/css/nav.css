@@ -440,8 +440,8 @@ header .user_profile img {
   color: var(--color-normal);
 }
 .saving-item img {
-  height: 80px;
-  width: 80px !important;
+  height: 70px;
+  width: 70px !important;
 }
 .side-content {
     display: flex;
