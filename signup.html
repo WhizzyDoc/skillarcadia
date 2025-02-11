@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./static/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./static/css/fontawesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="./static/css/rigan.css">
     <link rel="stylesheet" type="text/css" href="./static/themes/w-theme-blue.css">
     <link rel="stylesheet" type="text/css" href="./dist/semantic.min.css">
@@ -31,20 +32,21 @@
               </div>
                         <form class="admin-login-form" action="#">
                           <h2 class="text-title">Student Login</h2>
-                          <div class="form-group">
+                          <div class="form-group email-group">
                             <label>Enter Your Email</label>
-                            <input type="email" class="form-control" id="email" required>
+                            <input type="email" class="form-control" id="email">
                           </div>
                           <div class="form-group">
                             <label>Enter your password</label>
-                            <input type="password" class="form-control" id="password" required>
+                            <input type="password" class="form-control" id="password">
                           </div>
-                          <p class="mt-2 w-text-error" id="admin_err"></p>
+                          <p class="mt-2 w-text-red" id="admin_err"></p>
+                          <div class="bio-login">
+                            <i class="fa fa-solid fa-fingerprint"></i>
+                            <p class="mt-2">Login with fingerprint</p>
+                          </div>
                           <div class="forget">
-                            <label for="remember">
-                              <input type="checkbox" id="remember">
-                              <p>Remember me</p>
-                            </label>
+                            <a href="#" id="account-switch" class="text-color">Switch Account</a>
                             <a href="#forgot_password" class="text-color">Forgot password?</a>
                           </div>
                           <button type="submit" class="login-btn bg-button">Log In</button>
@@ -55,6 +57,23 @@
           </div>
       </div>
       <script>
+        if(localStorage.skill_auth_username) {
+          $(".text-title").html(`Welcome Back<br><small style="font-size:60%!important">(${localStorage.skill_auth_username})</small>`)
+          $(".email-group").hide()
+          $(".bio-login").show()
+          $("#account-switch").show()
+        }
+        else {
+          $(".text-title").html(`Student Login`)
+          $(".email-group").show()
+          $(".bio-login").hide()
+          $("#account-switch").hide()
+        }
+        $("#account-switch").click(function(e) {
+          e.preventDefault();
+          localStorage.removeItem("skill_auth_username");
+          location.reload()
+        })
           $('.view-pass').click(function() {
               var input = $(this).siblings('input');
               if(input.attr('type') == 'password') {
@@ -70,6 +89,10 @@
           $('.admin-login-form').submit(function(e) {
               e.preventDefault();
               authenticate();
+          })
+          $(".bio-login").click(function() {
+            $('#admin_err').html("Sorry, biometric authentication is not supported yet. Kindly use your password.")
+            //biometricLogin()
           })
     
       </script>

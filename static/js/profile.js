@@ -20,6 +20,12 @@ function getUser() {
         $('#profile_email').html(`${d.email}`)
         $('#credit_score').html(`${d.track.title}`)
         $('#tier').html(`<span class="user_level_3">Cohort ${d.cohort}</span>`)
+        if(d.biometricEnabled) {
+           document.querySelector('#checkbox1').checked = true
+         }
+         else {
+            document.querySelector('#checkbox1').checked = false
+         }
       $('.preloader').addClass('keep')
     }
     else if(data['status'] == 'error') {
@@ -86,5 +92,119 @@ function getUser() {
 
 }
 
+function toggleBiometric() {
+    if(window.PublicKeyCredential) {
+      $('.preloader').removeClass('keep')
+      //console.log("supported")
+      let begin_url = `${base_url}webauthn/register_begin/`;
+      
+      try {
+        // request challenge
+        fetch(begin_url, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Token ${auth_token}`,
+            'Content-Type': 'application/json'
+          },
+          body: null
+        })
+        .then(res => {
+          return res.json()
+        })
+        .then(userResponse => {
+          //console.log(userResponse)
+          if(!userResponse) {
+            pushNotification("n_error", "Error: unable to start activation.", 3000);
+            $('.preloader').addClass('keep')
+            return
+          }
+          userResponse.pubKeyCredParams = userResponse.pub_key_cred_params
+          userResponse.user.displayName = userResponse.user.display_name
+          console.log(userResponse)
+          userResponse.challenge = base64UrlToBuffer(userResponse.challenge);
+          userResponse.user.id = base64UrlToBuffer(userResponse.user.id);
+          //console.log(userResponse)
+          navigator.credentials.create({publicKey: userResponse})
+          .then(credential => {
+            console.log(credential)
+            // send response to server for verification
+            let credentialData = {
+              id: credential.id,
+              rawId: bufferToBase64Url(credential.rawId),
+              type: credential.type,
+              response: {
+                attestationObject: bufferToBase64Url(credential.response.attestationObject),
+              clientDataJSON: bufferToBase64Url(credential.response.clientDataJSON)
+              }
+            };
+            completeBiometricRegistration(credentialData)
+          })
+          .catch(error => {
+            pushNotification("n_error", `Registration failed: ${error}`, 4000)
+            $('.preloader').addClass('keep')
+            console.log(error)
+          })
+        })
+        .catch(error => {
+          pushNotification("n_error", `Registration failed: ${error}`, 4000)
+          $('.preloader').addClass('keep')
+          console.log(error)
+        })
+        
+      }
+      catch (error) {
+        pushNotification("n_error", `Registration failed: ${error}`, -1)
+        $('.preloader').addClass('keep')
+        console.log(error)
+      }
+    }
+    else {
+      console.log("Unsupported")
+      pushNotification("n_error", "Biometric is not supported.", 3000)
+      $('.preloader').addClass('keep')
+    }
+}
 
-  //var get_new_notes = setInterval(getNewNotifications, 3000)
+function completeBiometricRegistration(credentialData) {
+  let complete_url = `${base_url}webauthn/register_complete/`;
+
+  fetch(complete_url, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Token ${auth_token}`,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentialData)
+  })
+  .then(res => {
+    return res.json()
+  })
+  .then(result => {
+    if(result.status) {
+      pushNotification("n_success", "Biometric activated successfully.", 3000)
+      document.querySelector('#checkbox1').checked = true
+      $('.preloader').addClass('keep')
+    }
+    else {
+      pushNotification("n_error", data.error, 3000)
+      $('.preloader').addClass('keep')
+    }
+  })
+  .catch(error => {
+    pushNotification("n_error", `Registration failed: ${error}`, 4000)
+    $('.preloader').addClass('keep')
+    console.log(error)
+  })
+}
+
+function changeBiometric() {
+  let elem = document.querySelector("#checkbox1")
+  if(elem.checked) {
+    toggleBiometric()
+  }
+  else {
+      //
+  }
+}
+

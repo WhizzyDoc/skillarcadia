@@ -322,9 +322,7 @@ body {
   .bottom-nav div:hover a, .bottom-nav div.active a {
     color: var(--bg-active);
   }
-  @media  screen and (min-width:900px) {
-        .bottom-nav {display:none}
-    }
+  
   
   .bottom-nav > a {
     padding: 0;
@@ -442,6 +440,9 @@ header .user_profile img {
 .saving-item img {
   height: 70px;
   width: 70px !important;
+}
+.saving-item .icd {
+  width: calc(100% - 100px);
 }
 .side-content {
     display: flex;
@@ -1919,4 +1920,21 @@ input.invalid {
   width: 100px;
   height: 100px;
   background: #fff;
+}
+#accordion {
+  height: calc(100vh - 250px) !important;
+  overflow-y: auto;
+}
+
+.size-text {
+  display: none !important;
+}
+
+@media  screen and (min-width:798px) {
+  body * {
+    display: none !important
+  }
+  .size-text {
+    display: block !important;
+  }
 }

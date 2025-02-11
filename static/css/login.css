@@ -177,7 +177,7 @@ form button {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 25px 0 35px 0;
+    margin: 25px 0 20px 0;
     color: #fff;
   }
   
@@ -322,4 +322,14 @@ svg {
   width: 100vw;
   height: 100vh;
   opacity: 0;
+}
+
+.bio-login {
+  color: #fff;
+  margin-bottom: 20px;
+  margin-top: 30px !important;
+  text-align: center;
+}
+.bio-login i {
+  font-size: 40px;
 }

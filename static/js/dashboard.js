@@ -49,13 +49,13 @@ var auth_token = localStorage.skill_auth_token
           let temp = `
           <div class="saving-item w-margin-bottom" data-id="${d[i].id}">
             <img src="${base_image_url}${d[i].image}" alt="">
-            <div>
+            <div class="icd">
               <div class="h5 w-bold-x">${d[i].title}</div>
               <p class="w-text-gray">
                 ${truncateWord(d[i].description, 50)}
               </p>
             </div>
-            <div><i class="fa fa-chevron-right"></i></div>
+            <div class="ic"><i class="fa fa-chevron-right"></i></div>
           </div>`;
           $(".course-list-con").append(temp)
         }
@@ -121,8 +121,13 @@ var auth_token = localStorage.skill_auth_token
                   ic = `<i class="fa fa-clock-o w-text-orange"></i>`;
               }
               let resources = ``
-              for(let j=0; j<d[i].resources.length; j++) {
-                resources += `<a href="${d[i].resources[j]}" target="_blank"><li class="link-color">${d[i].resources[j]}</li></a>`
+              if(d[i].resources.length > 0) {
+                for(let j=0; j<d[i].resources.length; j++) {
+                  resources += `<a href="${d[i].resources[j]}" target="_blank"><li class="link-color">${d[i].resources[j]}</li></a>`
+                }
+              }
+              else {
+                resources = `<li class="w-text-white">No resources provided</li>`
               }
             let temp = `
             <div class="card-header" style="background: var(--bg-container);">

@@ -1,4 +1,4 @@
-//const base_image_url = `http://127.0.0.1:8000`;
+//const base_image_url = `https://127.0.0.1:8000`;
 const base_image_url = `https://riganhub.pythonanywhere.com`;
 const base_url = `${base_image_url}/api/`;
 var auth_token = localStorage.skill_auth_token
@@ -73,5 +73,24 @@ function check_response(res) {
   if(((res.status).toString())[0] == "4" || ((res.status).toString())[0] == "5") {
     pushNotification("n_error", `Error ${res.status}: ${res.statusText}`, 5000)
   }
+}
+
+function base64UrlToBuffer(base64) {
+  let binary = atob(base64.replace(/-/g, "+").replace(/_/g, "/"));
+  let len = binary.length;
+  let buffer = new Uint8Array(len);
+  for(let i = 0; i < len; i++) {
+    buffer[i] = binary.charCodeAt(i);
+  }
+  return buffer
+}
+
+function bufferToBase64Url(buffer) {
+  let binary = "";
+  let len = buffer.byteLength;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(buffer[i]);
+  }
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 
